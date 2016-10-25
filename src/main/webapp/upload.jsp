@@ -12,29 +12,134 @@
         <title>Instagrim</title>
         <link rel="stylesheet" type="text/css" href="Styles.css" />
     </head>
+    <style type="text/css">
+        *{
+            margin : 0;
+            padding : 0px;
+        }
+        body{
+            background-image: url(paper.jpg);
+            background-repeat: no-repeat;
+            background-size:cover;
+        }
+        form{
+            position: relative;
+            right:60px;
+            top:40px;
+            width : 30em;
+            height:6em;
+            float:right;
+            background: #fff;
+            opacity: 0.6;
+            border-radius:10px 20px 10px 60px;
+            box-shadow: 0 12px 8px -9px #555;
+        }
+        label{
+            font-family: "Source Sans Pro", helvetica, sans-serif;
+            font-weight:200;
+            float:left;
+            width:8em;
+            font-size: 21px;
+            margin: .5em;
+            padding: .1em;
+            color:#555
+        }
+        input{
+            float:right;
+            width:13em;
+            color:#555;
+            font-size: 20px;
+            outline:none;
+            margin: .5em;
+            padding: .1em;
+            border-radius:10px 0 10px 0;
+        }
+        input[type=submit]{
+            float:bottom;
+            width:auto;
+            margin:0 2px 3px 0;
+            padding:0px 8px 3px;
+            font-size: 1em;
+            font-weight: 800;
+            color:#fff;
+            border:none;
+            background-color: #d6e636;
+            box-shadow:1px 1px 2px #888;
+        }
+        input[type=submit]:hover{
+            font-size: 1.5em;
+        }
+        footer{
+            position:absolute;
+            bottom :2px;
+        }
+        li{
+            overflow: hidden;
+            padding:.25em 0;
+        }
+        h2{
+            font:"Fantasy";
+            font-size: 45px;
+            color:#f52626;
+            font-style: italic;
+            font-weight: 300;
+            position: absolute;
+            bottom:30px;
+            left:60px;
+            padding: 50px;
+        }
+        h3{
+            font:"arial";
+            font-size: 43px;
+            color:#f52626;
+            font-style: italic;
+            font-weight: 200;
+            position: absolute;
+            bottom:160px;
+            left: 40px;
+        }
+        a{
+            font:"times";
+            font-size: 23px;
+            color:black;
+            text-decoration:none;
+            font-weight: 100;
+            line-height: 60px;
+        }
+        a:hover{
+            font:"times";
+            font-size: 35px;
+            font-style: italic;
+            text-decoration: underline;
+        }
+        aside{
+            height: auto;
+            margin: 10px;
+            padding : 10px;
+            position :absolute;
+            right : 30px;
+            top : 10px;
+        }
+    </style>
     <body>
-        <h1>InstaGrim ! </h1>
-        <h2>Your world in Black and White</h2>
-        <nav>
-            <ul>
-                <li class="nav"><a href="upload.jsp">Upload</a></li>
-                <li class="nav"><a href="/Instagrim/Images/majed">Sample Images</a></li>
-            </ul>
-        </nav>
- 
+
         <article>
-            <h3>File Upload</h3>
+            <h2>.....A busy life</h2>
+            <h3>Maybe everyday..</h3>
+            <script language='javascript'>
+            function clo(){
+                window.close();
+            }           
+            </script>
             <form method="POST" enctype="multipart/form-data" action="Image">
-                File to upload: <input type="file" name="upfile"><br/>
-
-                <br/>
-                <input type="submit" value="Press"> to upload the file!
+                <label for="upfile">Picture to upload:</label> <input type="file" name="upfile">
+                <input type="submit" value="Upload">
             </form>
-
         </article>
+
         <footer>
             <ul>
-                <li class="footer"><a href="/Instagrim">Home</a></li>
+                <li class="footer"><a href="/Instagrim/loggedIn.jsp">Home</a></li>
             </ul>
         </footer>
     </body>

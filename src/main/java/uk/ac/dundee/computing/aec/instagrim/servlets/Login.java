@@ -18,8 +18,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import uk.ac.dundee.computing.aec.instagrim.lib.CassandraHosts;
+import uk.ac.dundee.computing.aec.instagrim.models.PicModel;
 import uk.ac.dundee.computing.aec.instagrim.models.User;
 import uk.ac.dundee.computing.aec.instagrim.stores.LoggedIn;
+import uk.ac.dundee.computing.aec.instagrim.stores.Pic;
 
 /**
  *
@@ -45,26 +47,42 @@ public class Login extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
         String username=request.getParameter("username");
         String password=request.getParameter("password");
         
+        HttpSession session=request.getSession();
         User us=new User();
         us.setCluster(cluster);
+        PicModel tm = new PicModel();
+        tm.setCluster(cluster);
+        java.util.LinkedList<String> userProfile=us.getUserProfile(username);
+        java.util.LinkedList<Pic> lsPics = tm.getPicsForUser(username);
+        session.setAttribute("Pics", lsPics);
+        java.util.UUID picid = us.getUserPic(username);
+        session.setAttribute("profile",userProfile);
+        session.setAttribute("picid", picid);
+        session.setAttribute("username",username);
         boolean isValid=us.IsValidUser(username, password);
-        HttpSession session=request.getSession();
+        
+        User u = new User();
+        u.setCluster(cluster);
+        String User = (String)session.getAttribute("username");
+        java.util.LinkedList<String> others = u.getOthers(User);
+        session.setAttribute("others", others);
+        
         System.out.println("Session in servlet "+session);
         if (isValid){
             LoggedIn lg= new LoggedIn();
             lg.setLogedin();
             lg.setUsername(username);
             //request.setAttribute("LoggedIn", lg);
-            
             session.setAttribute("LoggedIn", lg);
             System.out.println("Session in servlet "+session);
-            RequestDispatcher rd=request.getRequestDispatcher("index.jsp");
+            RequestDispatcher rd=request.getRequestDispatcher("loggedIn.jsp");
 	    rd.forward(request,response);
             
         }else{

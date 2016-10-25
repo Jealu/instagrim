@@ -23,12 +23,20 @@ public final class Keyspaces {
                     + " image blob,"
                     + " thumb blob,"
                     + " processed blob,"
+                    + " message text,"
                     + " imagelength int,"
                     + " thumblength int,"
-                    + "  processedlength int,"
+                    + " processedlength int,"
                     + " type  varchar,"
                     + " name  varchar,"
                     + " PRIMARY KEY (picid)"
+                    + ")";
+            String CreateCommentTable = "CREATE TABLE if not exists instagrim.comments (\n"
+                    + "picid uuid,\n"
+                    + "comid uuid,\n"
+                    + "user varchar,\n"
+                    + "comment text,\n"
+                    + "PRIMARY KEY (picid,comid)"
                     + ")";
             String Createuserpiclist = "CREATE TABLE if not exists instagrim.userpiclist (\n"
                     + "picid uuid,\n"
@@ -43,11 +51,13 @@ public final class Keyspaces {
                     + "  );";
             String CreateUserProfile = "CREATE TABLE if not exists instagrim.userprofiles (\n"
                     + "      login text PRIMARY KEY,\n"
-                     + "     password text,\n"
+                    + "      password text,\n"
+                    + "      picid uuid,\n"
                     + "      first_name text,\n"
                     + "      last_name text,\n"
-                    + "      email set<text>,\n"
-                    + "      addresses  map<text, frozen <address>>\n"
+                    + "      email text,\n"
+                    + "      interest text,\n"
+                    + "      addresses  text\n"
                     + "  );";
             Session session = c.connect();
             try {
@@ -72,6 +82,14 @@ public final class Keyspaces {
                 System.out.println("Can't create tweet table " + et);
             }
             System.out.println("" + Createuserpiclist);
+            
+            try {
+                SimpleStatement cqlQuery = new SimpleStatement(CreateCommentTable);
+                session.execute(cqlQuery);
+            } catch (Exception et) {
+                System.out.println("Can't create comment table " + et);
+            }
+            System.out.println("" + CreateCommentTable);
 
             try {
                 SimpleStatement cqlQuery = new SimpleStatement(Createuserpiclist);
